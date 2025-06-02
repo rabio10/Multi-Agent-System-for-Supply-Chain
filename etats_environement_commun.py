@@ -20,4 +20,12 @@ class EtatEnvironement():
         columns = [i for i in range(53)] # semaine 0 = initial state
         rows = ["Prevision", "Production", "Stock", "Etat Systeme Prod"]
         self.plan_production_df = pd.DataFrame(index=rows, columns=columns)
+        self.plan_production_df["Production", 0] = 50 # baseline prod
+        self.plan_production_df["Stock", 0] = 50
+
+        self.holding_cost = 5 # constant to be defined
+        self.qte_stock_holding_in_warehouse = 2 # TODO: to get it from warehouse agent
+
+        self.shipement_prod_to_warehouse = -1
+
 
