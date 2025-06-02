@@ -10,6 +10,7 @@ class Producteur():
     * prepare_shipement()
     * ... simulations of other agents ...
     * get_reward()
+    * update Q table
     """
     def __init__(self, etat_env: EtatEnvironement, week):
         self.etat_env = etat_env
@@ -151,11 +152,11 @@ class Producteur():
         self.current_reward = r
 
     def encode_state(self):
-        # state is (production_level, machines_status) + global state (prevision_demande)
+        # state is (production_level, machines_status) + global state (prevision_demande) # TODO :: add oerder in state
         state = (0,0)
         # production_level
         v = self.current_production_qte
-        if v == 0:
+        if v <= 0:
             state[0] = 0
         elif v <= self.production_level["low"][1] and v > self.production_level["low"][0]:
             # low
@@ -175,3 +176,4 @@ class Producteur():
         
         return state
 
+# TODO : def update_q_table()
