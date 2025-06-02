@@ -15,14 +15,14 @@ class Producteur():
     def __init__(self, etat_env: EtatEnvironement, week):
         self.etat_env = etat_env
         self.plan_production_df = etat_env.plan_production_df
-        # TODO: current week to be defined
         self.current_week = week
         self.machines_health = 1
         self.proba_downtime = 0.1 # it changes depending on health
         self.health_decay = 0.995
         self.downtime_increase_rate = 1.01
 
-        # state is (production_level, machines_status) + global state (prevision_demande)
+        # state is (production_level, machines_status, order_from_warehouse) + global state (prevision_demande) 
+        # TODO : should add to the state "order_from_warehouse" and modify the whole class 
         self.production_level = {"none":[0] , "low": [0,50] , "mid": [50, 200], "high": [200, 450]}
         self.prod_level_dict = {0:"none", 1:"low", 2:"mid", 3:"high"}
         self.machines_status_dict = {"up":1, "down":0}

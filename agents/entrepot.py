@@ -30,6 +30,12 @@ class Entrepot():
         self.nbr_detailant = 2
         self.q_table = np.full((4*4, 4 * 4**(self.nbr_detailant)),0)
         self.stock_lvl_dict = {"rupture":0, "low":200, "mid":400, "high":600} # i.e. 200 < stock <= 400 : mid
+
+        # costs
+        self.shipping_cost = 0.5
+        self.stockout_cost = 20
+
+        self.current_reward = 0
     
 
 
@@ -89,6 +95,7 @@ class Entrepot():
         shipement_from_prod = self.etat_env.shipement_prod_to_warehouse
         # update stock
         self.qte_stock += shipement_from_prod
+        self.etat_env.qte_stock_holding_in_warehouse = self.qte_stock
 
     def get_commands_from_detaillants(self):
         list_cmds = self.etat_env.qte_ordered_from_detaillants_to_warehouse
@@ -96,4 +103,10 @@ class Entrepot():
         self.list_cmds_from_detailants = list_cmds
         
         
+    def get_reward(self):
+        v_holding = self.etat_env.holding_cost * self.etat_env.qte_stock_holding_in_warehouse
+        v_shipping = self.shipping_cost * sum(self.etat_env.shipement_warehouse_to_detailants[0:2])
+        v_stockout = self.stockout_cost * np.max([0, sum(self.list_cmds_from_detailants) - self.qte_stock])
 
+        r = -(v_holding + v_shipping + v_stockout)
+        self.current_reward = r

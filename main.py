@@ -70,3 +70,5 @@ if __name__ == "__main__":
         entrp_qtable = entrepot1.q_table
         det1_qtable = detailant1.q_table
         det2_qtable = detailant2.q_table
+    
+    # TODO : extract optimal policy from q table of each agent
