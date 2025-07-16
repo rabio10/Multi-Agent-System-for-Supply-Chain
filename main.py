@@ -1,25 +1,35 @@
 import numpy as np
+from logging_config import log
+import datetime
+
 from agents.detailant import Detailant
 from agents.entrepot import Entrepot
 from agents.producteur import Producteur
 from etats_environement_commun import EtatEnvironement
 
+
+# begining of the script
+TODAY_DATE = datetime.datetime.now()
+log.info(f"Today's date: {TODAY_DATE.strftime('%d %B %Y')}")
+DATE_THRESHOLD = (TODAY_DATE - datetime.timedelta(days=2))
+log.info(f"Date threshold: {DATE_THRESHOLD.strftime('%d %B %Y')}")
+
 if __name__ == "__main__":
-    print("yoo")
-    print("--------debut simulation---------")
-    print("52 semaine dans l'année")
+    log.info("--------debut simulation---------")
+    log.info("52 semaine dans l'année")
 
     num_epoch = 5
     environement1 = EtatEnvironement()
 
     # initialize q tables
+    log.info("initialize q tables")
     prod1_qtable = 0 # TODO
     entrp_qtable = 0
     det1_qtable = 0
     det2_qtable = 0
 
     for ep in range(num_epoch):
-        print(f"--------epoch {ep}---------")
+        log.info(f"--------epoch {ep}---------")
         producteur1 = Producteur(environement1,1)
         entrepot1 = Entrepot(environement1, 1)
         detailant1 = Detailant(environement1,1,0)
